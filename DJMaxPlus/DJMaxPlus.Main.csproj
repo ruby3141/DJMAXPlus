@@ -6,6 +6,11 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Platforms>x64</Platforms>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DJMAXPlus.OverlayRenderer\DJMAXPlus.OverlayRenderer.csproj" />
+  </ItemGroup>
 
 </Project>

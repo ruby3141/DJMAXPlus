@@ -12,4 +12,10 @@
     <PackageReference Include="CefSharp.OffScreen.NETCore" Version="119.4.30" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestPage.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
