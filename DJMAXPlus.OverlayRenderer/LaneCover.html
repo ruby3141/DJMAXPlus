@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+
+<head>
+</head>
+
+<body>
+	<div id="_dp_LaneCover"></div>
+	<div id="_dp_Config">
+		<form onsubmit="return false;">
+			<fieldset id="_dp_Config_LaneDirection">
+				<legend>레인 방향 </legend>
+				<span>왼쪽</span>
+				<input type="radio" name="LaneCoverDirection" value="Left">
+				<span>가운데</span>
+				<input type="radio" name="LaneCoverDirection" value="Center" checked>
+				<span>오른쪽</span>
+				<input type="radio" name="LaneCoverDirection" value="Right">
+			</fieldset>
+			<fieldset>
+				<legend>레인 커버 길이 (0 ~ 1000)</legend>
+				<input id="_dp_LaneCoverLength_input" type="number" name="LaneCoverLength" min="0" max="1000"
+					value="200" />
+				<input id="_dp_LaneCoverLength_slider" type="range" min="0" max="1000" value="200" />
+			</fieldset>
+			<fieldset>
+				<legend>배속</legend>
+				<input id="_dp_NoteSpeed_input" type="number" name="NoteSpeed" min="1.0" max="9.9" step=".1"
+					value="2.5" />
+				<!--1배속에서의 노트 낙하 시간을 2700ms = 1620dF로 놓고 계산한 결과-->
+				<!--여기서 dF은 60FPS의 1/10프레임 단위로 투덱 녹숫과 같은 값이다-->
+				<span id="_dp_NoteSpeed_dF">518dF</span>
+				<span id="_dp_NoteSpeed_ms">864ms</span>
+			</fieldset>
+		</form>
+	</div>
+	<script>
+		if(!localStorage.getItem("_dp_NoteSpeed_input")) localStorage.setItem("_dp_NoteSpeed_input", "2.5");
+		if(!localStorage.getItem("_dp_LaneCoverLength_input")) localStorage.setItem("_dp_LaneCoverLength_input", "200");
+		if(!localStorage.getItem("_dp_Config_LaneDirection")) localStorage.setItem("_dp_Config_LaneDirection", "Center");
+
+		function setNoteSpeedIndicators()
+		{
+			let laneCoverLength = document.querySelector("#_dp_LaneCoverLength_input").valueAsNumber;
+			let noteSpeed = document.querySelector("#_dp_NoteSpeed_input").valueAsNumber;
+			let indicator_ms = document.querySelector("#_dp_NoteSpeed_ms");
+			let indicator_df = document.querySelector("#_dp_NoteSpeed_dF");
+
+			indicator_ms.innerText = Math.round(2.7 * (1000 - laneCoverLength) / noteSpeed) + "ms"
+			indicator_df.innerText = Math.round(1.62 * (1000 - laneCoverLength) / noteSpeed) + "dF"
+		}
+
+		document.querySelectorAll("#_dp_Config_LaneDirection>input").forEach((elem) =>
+		{
+			elem.addEventListener("change", (e) =>
+			{
+				laneCover = document.querySelector("#_dp_LaneCover");
+				configForm = document.querySelector("#_dp_Config");
+				switch (e.target.value)
+				{
+					case "Left":
+						laneCover.style.left = "4.1%";
+						configForm.style.left = "30.1%";
+						break;
+					case "Center":
+						laneCover.style.left = "37.5%";
+						configForm.style.left = "64.5%";
+						break;
+					case "Right":
+						laneCover.style.left = "70.9%";
+						configForm.style.left = "calc(70.9% - 240px - 2%)";
+						break;
+					default:
+						console.log(`unexpected LaneDirection value: ${e.target.value}`);
+				}
+
+				localStorage.setItem("_dp_Config_LaneDirection", e.target.value)
+			});
+		});
+
+		document.querySelector("#_dp_LaneCoverLength_input").addEventListener("change", (e) =>
+		{
+			if (e.target.valueAsNumber > 1000) e.target.value = "1000"
+			document.querySelector("#_dp_LaneCover").style.height = e.target.valueAsNumber * 0.7 / 10 + "%";
+			document.querySelector("#_dp_LaneCoverLength_slider").value = e.target.value;
+			setNoteSpeedIndicators();
+			localStorage.setItem("_dp_LaneCoverLength_input", document.querySelector("#_dp_LaneCoverLength_input").value);
+		});
+
+		document.querySelector("#_dp_LaneCoverLength_slider").addEventListener("change", (e) =>
+		{
+			document.querySelector("#_dp_LaneCover").style.height = e.target.valueAsNumber * 0.7 / 10 + "%";
+			document.querySelector("#_dp_LaneCoverLength_input").value = e.target.value;
+			setNoteSpeedIndicators();
+			localStorage.setItem("_dp_LaneCoverLength_input", document.querySelector("#_dp_LaneCoverLength_input").value);
+		});
+
+		document.querySelector("#_dp_NoteSpeed_input").addEventListener("change", (e) =>
+		{
+			setNoteSpeedIndicators();
+			localStorage.setItem("_dp_NoteSpeed_input", document.querySelector("#_dp_NoteSpeed_input").value);
+		});
+
+		document.querySelector("#_dp_NoteSpeed_input").value = localStorage.getItem("_dp_NoteSpeed_input");
+		document.querySelector("#_dp_LaneCoverLength_input").value = localStorage.getItem("_dp_LaneCoverLength_input");
+		document.querySelector("#_dp_LaneCoverLength_slider").value = localStorage.getItem("_dp_LaneCoverLength_input");
+		document.querySelector(`#_dp_Config_LaneDirection input[value="${localStorage.getItem("_dp_Config_LaneDirection")}"]`).checked = true;
+
+		document.querySelector(`#_dp_Config_LaneDirection input[value="${localStorage.getItem("_dp_Config_LaneDirection")}"]`).dispatchEvent(new Event("change"));
+		document.querySelector("#_dp_LaneCoverLength_input").dispatchEvent(new Event("change"));
+		document.querySelector("#_dp_NoteSpeed_input").dispatchEvent(new Event("change"));
+	</script>
+	<style>
+		* {
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			margin: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		#_dp_LaneCover {
+			position: absolute;
+			left: 37.5%;
+			width: 25%;
+			height: 20%;
+			background-color: #333333;
+			background-repeat: repeat-y;
+			background-size: 100% auto;
+			background-position: bottom;
+		}
+
+		#_dp_Config {
+			position: absolute;
+			width: 240px;
+			left: 62.5%;
+			margin: 8px;
+			background-color: white;
+		}
+
+		#_dp_LaneCoverLength_input {
+			width: 60px;
+		}
+
+		#_dp_Config_LaneDirection {
+			display: grid;
+		}
+
+		#_dp_Config_LaneDirection span,
+		input {
+			text-align: center;
+		}
+
+		#_dp_Config_LaneDirection>span {
+			grid-row: 1;
+		}
+
+		#_dp_Config_LaneDirection>input {
+			grid-row: 2;
+		}
+
+		#_dp_NoteSpeed_dF {
+			float: right;
+			font-weight: bold;
+			color: green;
+		}
+
+		#_dp_NoteSpeed_ms {
+			margin-right: 8px;
+			float: right;
+			font-weight: bold;
+		}
+	</style>
+</body>
