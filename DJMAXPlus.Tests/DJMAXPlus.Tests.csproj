@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DJMAXPlus.OverlayRenderer\DJMAXPlus.OverlayRenderer.csproj" />
+    <ProjectReference Include="..\DJMAXPlus.Browser\DJMAXPlus.Browser.csproj" />
   </ItemGroup>
 
 </Project>

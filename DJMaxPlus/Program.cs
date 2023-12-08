@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 AsyncContext.Run(async delegate
 {
-    var renderer = new DJMAXPlus.OverlayRenderer.OverlayRenderer();
+    var renderer = new DJMAXPlus.BrowserRenderer.OverlayRenderer();
 
     await renderer.InitAsync();
 

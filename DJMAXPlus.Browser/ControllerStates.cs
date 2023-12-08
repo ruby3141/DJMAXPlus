@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DJMAXPlus.OverlayRenderer
+namespace DJMAXPlus.Browser
 {
-    public enum RendererStates
+    public enum ControllerStates
     {
         Uninitialized,
         Loading,

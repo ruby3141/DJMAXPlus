@@ -10,7 +10,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DJMAXPlus.OverlayRenderer\DJMAXPlus.OverlayRenderer.csproj" />
+    <ProjectReference Include="..\DJMAXPlus.Browser\DJMAXPlus.Browser.csproj" />
+    <ProjectReference Include="..\DJMAXPlus.Hook\DJMAXPlus.Hook.csproj" />
   </ItemGroup>
 
 </Project>
