@@ -66,6 +66,11 @@ namespace DJMAXPlus.Browser
             }
         }
 
+        public async Task EvaluateScript(string script)
+        {
+            ThrowIfNotReady();
+            await _browser.EvaluateScriptAsync(script);
+        }
 
         public void Dispose()
         {
