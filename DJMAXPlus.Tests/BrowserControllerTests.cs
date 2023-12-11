@@ -1,12 +1,7 @@
-using CefSharp.DevTools.Browser;
-using CefSharp.DevTools.HeadlessExperimental;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DJMAXPlus.Browser;
-
-namespace DJMAXPlus.Tests
+namespace DJMAXPlus.Browser.Tests
 {
     [TestClass]
-    public class BrowserControllerTest
+    public class BrowserControllerTests
     {
         BrowserController? browserController;
 
@@ -39,7 +34,6 @@ namespace DJMAXPlus.Tests
         {
             Assert.IsNotNull(browserController);
             await browserController.Resize(1920, 1080);
-
         }
     }
 }
