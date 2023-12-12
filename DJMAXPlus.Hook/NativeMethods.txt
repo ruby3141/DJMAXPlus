@@ -1,2 +1,6 @@
+// OverlayProjector
 FindWindowW
 SetWindowsHookEx
+
+// HotkeyManager
+RegisterHotKey
