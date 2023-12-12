@@ -1,9 +1,6 @@
 ﻿using CefSharp;
-using CefSharp.DevTools.Autofill;
 using CefSharp.OffScreen;
-using CefSharp.SchemeHandler;
-using System.Drawing;
-using System.Reflection;
+using DJMAXPlus.Common;
 
 namespace DJMAXPlus.Browser
 {
