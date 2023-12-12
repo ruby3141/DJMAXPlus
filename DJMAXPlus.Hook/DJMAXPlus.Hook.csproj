@@ -12,6 +12,9 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DJMAXPlus.Common\DJMAXPlus.Common.csproj" />
   </ItemGroup>
 
 </Project>
