@@ -4,3 +4,6 @@ SetWindowsHookEx
 
 // HotkeyManager
 RegisterHotKey
+GetMessage
+PostThreadMessage
+

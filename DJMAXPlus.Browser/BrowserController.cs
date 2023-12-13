@@ -36,7 +36,7 @@ namespace DJMAXPlus.Browser
                 throw new Exception($"Failed to load target web page; Status: {browserLoadResult.HttpStatusCode}, ErrorCode = {browserLoadResult.ErrorCode}");
             }
 
-            ControllerState = ControllerStates.Ready;
+            ControllerState = ControllerStates.Running;
         }
 
         public async Task Resize(int width, int height)
@@ -77,7 +77,7 @@ namespace DJMAXPlus.Browser
 
         private void ThrowIfNotReady()
         {
-            if (_browser is null || ControllerState != ControllerStates.Ready)
+            if (_browser is null || ControllerState != ControllerStates.Running)
                 throw new Exception("Renderer is not ready");
         }
     }

@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DJMaxPlus.Main", "DJMaxPlus
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DJMAXPlus.Tests", "DJMAXPlus.Tests\DJMAXPlus.Tests.csproj", "{B8E6396B-FCC9-4085-93ED-B3524707931B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DJMAXPlus.Common", "DJMAXPlus.Common\DJMAXPlus.Common.csproj", "{CA2AD41C-40BD-47C9-9020-6FE3CBC30315}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DJMAXPlus.Common", "DJMAXPlus.Common\DJMAXPlus.Common.csproj", "{CA2AD41C-40BD-47C9-9020-6FE3CBC30315}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

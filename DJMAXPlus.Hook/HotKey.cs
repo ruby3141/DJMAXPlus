@@ -6,12 +6,30 @@ using System.Threading.Tasks;
 
 namespace DJMAXPlus.Hook
 {
-    public struct HotKey
+    /// <summary>
+    /// Struct which represent Hotkey Value.
+    /// By limitation of Win32 API, "multiple keys with modifiers" kind of Hotkey should be implemented manually on handler callback.
+    /// </summary>
+    public struct Hotkey
     {
+        /// <summary>
+        /// Modifier Combination.
+        /// </summary>
         public Modifiers Modifier { get; set; }
 
+        /// <summary>
+        /// Keycode.
+        /// </summary>
         public VKeyCodes VKeyCode { get; set; }
 
+        public override int GetHashCode()
+        {
+            return ((int)Modifier << 16) + (int)VKeyCode;
+        }
+
+        /// <summary>
+        /// Flag Enum which represent Modifier Combination.
+        /// </summary>
         [Flags]
         public enum Modifiers : uint
         {
@@ -23,6 +41,10 @@ namespace DJMAXPlus.Hook
             Mod_NoRepeat = 0x4000,
         }
 
+        /// <summary>
+        /// Enum Which represent Keycode.
+        /// Values from Win32 API document excluding "unnamed" ones.
+        /// </summary>
         public enum VKeyCodes : uint
         {
             // Mouse Buttons
@@ -220,8 +242,6 @@ namespace DJMAXPlus.Hook
             VK_NONAME = 0xFC,
             VK_PA1 = 0xFD,
             VK_OEM_CLEAR = 0xFE,
-
         }
-
     }
 }
