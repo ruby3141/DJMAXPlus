@@ -36,7 +36,6 @@ namespace DJMAXPlus.Hook
 
         public void asdfasdf()
         {
-            System.Windows.Forms.Application
         }
 
         public bool RegisterHotKey(Hotkey hotkey)
@@ -85,8 +84,6 @@ namespace DJMAXPlus.Hook
             {
                 if (workerThread == null)
                     return;
-
-                PInvoke.PostThreadMessage(w
 
                 tokenSource.Cancel();
                 workerThread.Join();
