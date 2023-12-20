@@ -10,4 +10,8 @@
     <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DJMAXPlus.MainForm\DJMAXPlus.MainForm.csproj" />
+  </ItemGroup>
+
 </Project>

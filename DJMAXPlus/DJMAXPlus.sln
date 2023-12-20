@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34330.188
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DJMAXPlus", "DJMAXPlus.csproj", "{D3CEB1A8-E0FA-45FB-9518-FC489BB5F32D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DJMAXPlus.MainForm", "..\DJMAXPlus.MainForm\DJMAXPlus.MainForm.csproj", "{BAAD3D83-BE7E-4FF9-B520-7AD1D10560FC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D3CEB1A8-E0FA-45FB-9518-FC489BB5F32D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D3CEB1A8-E0FA-45FB-9518-FC489BB5F32D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D3CEB1A8-E0FA-45FB-9518-FC489BB5F32D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAAD3D83-BE7E-4FF9-B520-7AD1D10560FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAAD3D83-BE7E-4FF9-B520-7AD1D10560FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAAD3D83-BE7E-4FF9-B520-7AD1D10560FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAAD3D83-BE7E-4FF9-B520-7AD1D10560FC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
