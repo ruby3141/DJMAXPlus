@@ -1,0 +1,3 @@
+// HotKeyController
+RegisterHotKey
+UnregisterHotKey
