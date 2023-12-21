@@ -86,7 +86,7 @@
 			localStorage.setItem("_dp_LaneCoverLength_input", document.querySelector("#_dp_LaneCoverLength_input").value);
 		});
 
-		document.querySelector("#_dp_LaneCoverLength_slider").addEventListener("change", (e) =>
+		document.querySelector("#_dp_LaneCoverLength_slider").addEventListener("input", (e) =>
 		{
 			document.querySelector("#_dp_LaneCover").style.height = e.target.valueAsNumber * 0.7 / 10 + "%";
 			document.querySelector("#_dp_LaneCoverLength_input").value = e.target.value;
