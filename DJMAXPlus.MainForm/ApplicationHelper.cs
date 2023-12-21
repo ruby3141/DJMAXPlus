@@ -22,22 +22,14 @@
             }
         }
 
-
-
         /// <summary>
-        /// Make Application Exit() and join Main Loop Thread
+        /// Join Main Loop Thread. It will hang if Application.Exit() not called before this.
         /// </summary>
-        public static void Stop()
+        public static void Join()
         {
             lock (_applicationThreadLock)
             {
-                if (applicationThread != null)
-                {
-                    Application.Exit();
-                    applicationThread.Join();
-
-                    applicationThread = null;
-                }
+                applicationThread?.Join();
             }
         }
 
