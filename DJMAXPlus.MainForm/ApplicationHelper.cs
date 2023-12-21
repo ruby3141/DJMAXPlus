@@ -35,6 +35,9 @@
 
         public static object Invoke(Delegate method, params object?[]? args)
         {
+            if (invokerControl is null)
+                throw new NullReferenceException("invokerControl is not generated.");
+
             return invokerControl.Invoke(method, args);
         }
 
