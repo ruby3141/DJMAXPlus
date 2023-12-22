@@ -31,19 +31,88 @@
 				<span id="_dp_NoteSpeed_dF">518dF</span>
 				<span id="_dp_NoteSpeed_ms">864ms</span>
 			</fieldset>
+			<fieldset id="_dp_Config_SaveSlot">
+				<legend>저장 슬롯</legend>
+				<span>1</span>
+				<input type="radio" name="SaveSlot" value="z" checked>
+				<span>2</span>
+				<input type="radio" name="SaveSlot" value="x">
+				<span>3</span>
+				<input type="radio" name="SaveSlot" value="c">
+				<span>4</span>
+				<input type="radio" name="SaveSlot" value="v">
+			</fieldset>
 		</form>
 	</div>
 	<script>
-		if(!localStorage.getItem("_dp_NoteSpeed_input")) localStorage.setItem("_dp_NoteSpeed_input", "2.5");
-		if(!localStorage.getItem("_dp_LaneCoverLength_input")) localStorage.setItem("_dp_LaneCoverLength_input", "200");
-		if(!localStorage.getItem("_dp_Config_LaneDirection")) localStorage.setItem("_dp_Config_LaneDirection", "Center");
-
-		function setNoteSpeedIndicators()
+		function getConfigObject()
 		{
-			let laneCoverLength = document.querySelector("#_dp_LaneCoverLength_input").valueAsNumber;
-			let noteSpeed = document.querySelector("#_dp_NoteSpeed_input").valueAsNumber;
-			let indicator_ms = document.querySelector("#_dp_NoteSpeed_ms");
-			let indicator_df = document.querySelector("#_dp_NoteSpeed_dF");
+			configForm = document.querySelector("#_dp_Config form")
+			return {
+				LaneCoverDirection: configForm["LaneCoverDirection"].value,
+				LaneCoverLength: configForm["LaneCoverLength"].value,
+				NoteSpeed: configForm["NoteSpeed"].value,
+			}
+		}
+
+		function loadConfig()
+		{
+			configForm = document.querySelector("#_dp_Config form")
+			slotName = configForm["SaveSlot"].value
+			config = JSON.parse(localStorage.getItem("_dp_SaveData"))
+			configForm["LaneCoverDirection"].value = config[slotName].LaneCoverDirection
+			configForm["LaneCoverLength"].value = config[slotName].LaneCoverLength
+			configForm["NoteSpeed"].value = config[slotName].NoteSpeed
+
+			updateLaneCoverDirection()
+			updateLaneCoverLength(config[slotName].LaneCoverLength)
+			updateNoteSpeedIndicators()
+		}
+
+		function saveConfig()
+		{
+			configForm = document.querySelector("#_dp_Config form")
+			config = JSON.parse(localStorage.getItem("_dp_SaveData"))
+			slotName = configForm["SaveSlot"].value
+			config[slotName] = getConfigObject()
+			localStorage.setItem("_dp_SaveData", JSON.stringify(config))
+		}
+
+		function updateLaneCoverDirection()
+		{
+			configForm = document.querySelector("#_dp_Config form")
+			configFormContainer = document.querySelector("#_dp_Config")
+			laneCover = document.querySelector("#_dp_LaneCover");
+			switch (configForm["LaneCoverDirection"].value)
+			{
+				case "Left":
+					laneCover.style.left = "4.1%";
+					configFormContainer.style.left = "30.1%";
+					break;
+				case "Center":
+					laneCover.style.left = "37.5%";
+					configFormContainer.style.left = "63.5%";
+					break;
+				case "Right":
+					laneCover.style.left = "70.9%";
+					configFormContainer.style.left = "calc(70.9% - 240px - 2%)";
+					break;
+				default:
+					console.log(`unexpected LaneDirection value: ${e.target.value}`);
+			}
+		}
+
+		function updateLaneCoverLength(lengthValue)
+		{
+			document.querySelector("#_dp_LaneCover").style.height = lengthValue * 0.7 / 10 + "%";
+		}
+
+		function updateNoteSpeedIndicators()
+		{
+			laneCoverLength = document.querySelector("#_dp_LaneCoverLength_input").valueAsNumber
+			noteSpeed = document.querySelector("#_dp_NoteSpeed_input").valueAsNumber
+			indicator_ms = document.querySelector("#_dp_NoteSpeed_ms")
+			indicator_df = document.querySelector("#_dp_NoteSpeed_dF")
 
 			indicator_ms.innerText = Math.round(2.7 * (1000 - laneCoverLength) / noteSpeed) + "ms"
 			indicator_df.innerText = Math.round(1.62 * (1000 - laneCoverLength) / noteSpeed) + "dF"
@@ -51,63 +120,56 @@
 
 		document.querySelectorAll("#_dp_Config_LaneDirection>input").forEach((elem) =>
 		{
-			elem.addEventListener("change", (e) =>
+			elem.addEventListener("change", () =>
 			{
-				laneCover = document.querySelector("#_dp_LaneCover");
-				configForm = document.querySelector("#_dp_Config");
-				switch (e.target.value)
-				{
-					case "Left":
-						laneCover.style.left = "4.1%";
-						configForm.style.left = "30.1%";
-						break;
-					case "Center":
-						laneCover.style.left = "37.5%";
-						configForm.style.left = "63.5%";
-						break;
-					case "Right":
-						laneCover.style.left = "70.9%";
-						configForm.style.left = "calc(70.9% - 240px - 2%)";
-						break;
-					default:
-						console.log(`unexpected LaneDirection value: ${e.target.value}`);
-				}
-
-				localStorage.setItem("_dp_Config_LaneDirection", e.target.value)
-			});
-		});
+				updateLaneCoverDirection()
+				saveConfig()
+			})
+		})
 
 		document.querySelector("#_dp_LaneCoverLength_input").addEventListener("change", (e) =>
 		{
 			if (e.target.valueAsNumber > 1000) e.target.value = "1000"
-			document.querySelector("#_dp_LaneCover").style.height = e.target.valueAsNumber * 0.7 / 10 + "%";
+			else if (e.target.valueAsNumber < 0) e.target.value = "0"
 			document.querySelector("#_dp_LaneCoverLength_slider").value = e.target.value;
-			setNoteSpeedIndicators();
-			localStorage.setItem("_dp_LaneCoverLength_input", document.querySelector("#_dp_LaneCoverLength_input").value);
-		});
+
+			updateLaneCoverLength(e.target.valueAsNumber)
+			updateNoteSpeedIndicators()
+			saveConfig()
+		})
 
 		document.querySelector("#_dp_LaneCoverLength_slider").addEventListener("input", (e) =>
 		{
 			document.querySelector("#_dp_LaneCover").style.height = e.target.valueAsNumber * 0.7 / 10 + "%";
 			document.querySelector("#_dp_LaneCoverLength_input").value = e.target.value;
-			setNoteSpeedIndicators();
-			localStorage.setItem("_dp_LaneCoverLength_input", document.querySelector("#_dp_LaneCoverLength_input").value);
-		});
+			updateLaneCoverLength(e.target.valueAsNumber)
+			updateNoteSpeedIndicators()
+		})
+
+		document.querySelector("#_dp_LaneCoverLength_slider").addEventListener("change", saveConfig)
 
 		document.querySelector("#_dp_NoteSpeed_input").addEventListener("change", (e) =>
 		{
-			setNoteSpeedIndicators();
-			localStorage.setItem("_dp_NoteSpeed_input", document.querySelector("#_dp_NoteSpeed_input").value);
-		});
+			updateNoteSpeedIndicators()
+			saveConfig()
+		})
 
-		document.querySelector("#_dp_NoteSpeed_input").value = localStorage.getItem("_dp_NoteSpeed_input");
-		document.querySelector("#_dp_LaneCoverLength_input").value = localStorage.getItem("_dp_LaneCoverLength_input");
-		document.querySelector("#_dp_LaneCoverLength_slider").value = localStorage.getItem("_dp_LaneCoverLength_input");
-		document.querySelector(`#_dp_Config_LaneDirection input[value="${localStorage.getItem("_dp_Config_LaneDirection")}"]`).checked = true;
+		document.querySelectorAll("#_dp_Config_SaveSlot>input").forEach((elem) => { elem.addEventListener("change", loadConfig) })
 
-		document.querySelector(`#_dp_Config_LaneDirection input[value="${localStorage.getItem("_dp_Config_LaneDirection")}"]`).dispatchEvent(new Event("change"));
-		document.querySelector("#_dp_LaneCoverLength_input").dispatchEvent(new Event("change"));
-		document.querySelector("#_dp_NoteSpeed_input").dispatchEvent(new Event("change"));
+		window.onload = () =>
+		{
+			if (!localStorage.getItem("_dp_SaveData"))
+			{
+				localStorage.setItem("_dp_SaveData", JSON.stringify({
+					z: getConfigObject(),
+					x: getConfigObject(),
+					c: getConfigObject(),
+					v: getConfigObject(),
+				}))
+			}
+
+			loadConfig()
+		}
 	</script>
 	<style>
 		* {
@@ -166,6 +228,23 @@
 		}
 
 		#_dp_Config_LaneDirection>input {
+			grid-row: 2;
+		}
+
+		#_dp_Config_SaveSlot {
+			display: grid;
+		}
+
+		#_dp_Config_SaveSlot span,
+		input {
+			text-align: center;
+		}
+
+		#_dp_Config_SaveSlot>span {
+			grid-row: 1;
+		}
+
+		#_dp_Config_SaveSlot>input {
 			grid-row: 2;
 		}
 
