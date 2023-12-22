@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DJMAXPlus.MainForm\DJMAXPlus.MainForm.csproj" />
+    <ProjectReference Include="..\DJMAXPlus.Overlay\DJMAXPlus.Overlay.csproj" />
   </ItemGroup>
 
 </Project>
