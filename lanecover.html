@@ -105,6 +105,8 @@
 		function updateLaneCoverLength(lengthValue)
 		{
 			document.querySelector("#_dp_LaneCover").style.height = lengthValue * 0.7 / 10 + "%";
+			document.querySelector("#_dp_LaneCoverLength_slider").value = lengthValue;
+			document.querySelector("#_dp_LaneCoverLength_input").value = lengthValue;
 		}
 
 		function updateNoteSpeedIndicators()
@@ -131,7 +133,6 @@
 		{
 			if (e.target.valueAsNumber > 1000) e.target.value = "1000"
 			else if (e.target.valueAsNumber < 0) e.target.value = "0"
-			document.querySelector("#_dp_LaneCoverLength_slider").value = e.target.value;
 
 			updateLaneCoverLength(e.target.valueAsNumber)
 			updateNoteSpeedIndicators()
@@ -140,8 +141,6 @@
 
 		document.querySelector("#_dp_LaneCoverLength_slider").addEventListener("input", (e) =>
 		{
-			document.querySelector("#_dp_LaneCover").style.height = e.target.valueAsNumber * 0.7 / 10 + "%";
-			document.querySelector("#_dp_LaneCoverLength_input").value = e.target.value;
 			updateLaneCoverLength(e.target.valueAsNumber)
 			updateNoteSpeedIndicators()
 		})
