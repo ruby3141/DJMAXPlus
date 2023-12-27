@@ -1,5 +1,5 @@
 ﻿// CA2255: The ModuleInitializer attribute should not be used in libraries
-// 
+// This library should be injected into other assembly, so it's not the case.
 #pragma warning disable CA2255
 
 using System;
