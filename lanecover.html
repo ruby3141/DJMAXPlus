@@ -16,7 +16,13 @@
 				<span>오른쪽</span>
 				<input type="radio" name="LaneCoverDirection" value="Right">
 			</fieldset>
-			<fieldset>
+			<fieldset id="_dp_Config_LaneSideOffset">
+				<legend>좌우 오프셋</legend>
+				<span>이 갓겜은 기어 종류별로 위치가 다릅니다.</span>
+				<input id="_dp_Config_LaneSideOffset_input" type="number" name="LaneSideOffset" min="0" max="3" value="0" step=".01" />
+				<input id="_dp_Config_LaneSideOffset_slider" type="range" min="0" max="3" value="0" step=".01" />
+			</fieldset>
+			<fieldset id="_dp_Config_LaneCoverLength">
 				<legend>레인 커버 길이 (0 ~ 1000)</legend>
 				<input id="_dp_LaneCoverLength_input" type="number" name="LaneCoverLength" min="0" max="1000"
 					value="200" />
@@ -50,6 +56,7 @@
 			configForm = document.querySelector("#_dp_Config form")
 			return {
 				LaneCoverDirection: configForm["LaneCoverDirection"].value,
+				LaneSideOffset: configForm["LaneSideOffset"].value,
 				LaneCoverLength: configForm["LaneCoverLength"].value,
 				NoteSpeed: configForm["NoteSpeed"].value,
 			}
@@ -60,11 +67,13 @@
 			configForm = document.querySelector("#_dp_Config form")
 			slotName = configForm["SaveSlot"].value
 			config = JSON.parse(localStorage.getItem("_dp_SaveData"))
-			configForm["LaneCoverDirection"].value = config[slotName].LaneCoverDirection
-			configForm["LaneCoverLength"].value = config[slotName].LaneCoverLength
-			configForm["NoteSpeed"].value = config[slotName].NoteSpeed
+			configForm["LaneCoverDirection"].value = config[slotName].LaneCoverDirection ?? "Center"
+			configForm["LaneSideOffset"].value = config[slotName].LaneSideOffset ?? "0"
+			configForm["LaneCoverLength"].value = config[slotName].LaneCoverLength ?? "200"
+			configForm["NoteSpeed"].value = config[slotName].NoteSpeed ?? "2.5"
 
 			updateLaneCoverDirection()
+			updateLaneSideOffset(config[slotName].LaneSideOffset)
 			updateLaneCoverLength(config[slotName].LaneCoverLength)
 			updateNoteSpeedIndicators()
 		}
@@ -83,23 +92,33 @@
 			configForm = document.querySelector("#_dp_Config form")
 			configFormContainer = document.querySelector("#_dp_Config")
 			laneCover = document.querySelector("#_dp_LaneCover");
+			laneOffsetForm = document.querySelector("#_dp_Config_LaneSideOffset");
 			switch (configForm["LaneCoverDirection"].value)
 			{
 				case "Left":
-					laneCover.style.left = "4.1%";
-					configFormContainer.style.left = "30.1%";
+					laneCover.style.left = `${4.1 + configForm["LaneSideOffset"].valueAsNumber}%`;
+					configFormContainer.style.left = "33.1%";
+					laneOffsetForm.style.display = "grid"
 					break;
 				case "Center":
 					laneCover.style.left = "37.5%";
 					configFormContainer.style.left = "63.5%";
+					laneOffsetForm.style.display = "none"
 					break;
 				case "Right":
-					laneCover.style.left = "70.9%";
-					configFormContainer.style.left = "calc(70.9% - 240px - 2%)";
+					laneCover.style.left = `${70.9 - configForm["LaneSideOffset"].valueAsNumber}%`;
+					configFormContainer.style.left = "calc(70.9% - 240px - 5%)";
+					laneOffsetForm.style.display = "grid"
 					break;
 				default:
 					console.log(`unexpected LaneDirection value: ${e.target.value}`);
 			}
+		}
+
+		function updateLaneSideOffset(lengthValue)
+		{
+			document.querySelector("#_dp_Config_LaneSideOffset_slider").value = lengthValue;
+			document.querySelector("#_dp_Config_LaneSideOffset_input").value = lengthValue;
 		}
 
 		function updateLaneCoverLength(lengthValue)
@@ -128,6 +147,24 @@
 				saveConfig()
 			})
 		})
+
+		document.querySelector("#_dp_Config_LaneSideOffset_input").addEventListener("change", (e) =>
+		{
+			if (e.target.valueAsNumber > 3) e.target.value = "3"
+			else if (e.target.valueAsNumber < 0) e.target.value = "0"
+
+			updateLaneSideOffset(e.target.valueAsNumber)
+			updateLaneCoverDirection()
+			saveConfig()
+		})
+
+		document.querySelector("#_dp_Config_LaneSideOffset_slider").addEventListener("input", (e) =>
+		{
+			updateLaneCoverDirection()
+			updateLaneSideOffset(e.target.valueAsNumber)
+		})
+
+		document.querySelector("#_dp_Config_LaneSideOffset_slider").addEventListener("change", saveConfig)
 
 		document.querySelector("#_dp_LaneCoverLength_input").addEventListener("change", (e) =>
 		{
@@ -189,6 +226,7 @@
 		}
 
 		#_dp_LaneCover {
+			background-image: url("cover.jpg");
 			position: absolute;
 			left: 37.5%;
 			width: 25%;
@@ -207,10 +245,10 @@
 			width: 240px;
 			left: 63.5%;
 			margin: 8px;
-			background-color: white;
+			background-color: #FFFFFF;
 		}
 
-		#_dp_LaneCoverLength_input {
+		#_dp_LaneCoverLength_input, #_dp_Config_LaneSideOffset_input {
 			width: 60px;
 		}
 
@@ -229,6 +267,37 @@
 
 		#_dp_Config_LaneDirection>input {
 			grid-row: 2;
+		}
+
+		#_dp_Config_LaneSideOffset {
+			display: grid;
+		}
+
+		#_dp_Config_LaneSideOffset span,
+		input {
+			text-align: center;
+		}
+
+		#_dp_Config_LaneSideOffset span
+		{
+			font-size: xx-small;
+			grid-row: 1;
+			grid-column: span 2;
+		}
+
+		#_dp_Config_LaneSideOffset input
+		{
+			grid-row: 2;
+		}
+
+		#_dp_Config_LaneCoverLength
+		{
+			display: grid;
+		}
+
+		#_dp_Config_LaneCoverLength input
+		{
+			grid-row: 1;
 		}
 
 		#_dp_Config_SaveSlot {
