@@ -4,6 +4,20 @@ import overlay from 'electron-overlay'
 app.disableHardwareAcceleration()
 app.whenReady().then(() =>
 {
+	const anchorWindow = new BrowserWindow(
+		{
+			width: 380,
+			height: 220,
+		})
+
+	anchorWindow.on('closed', () =>
+	{
+		overlay.stop()
+		app.exit()
+	})
+
+	anchorWindow.loadFile('index.html')
+
 	overlay.start()
 
 	overlay.setHotkeys([
