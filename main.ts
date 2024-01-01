@@ -99,7 +99,6 @@ app.whenReady().then(() =>
 
 	overlayWindow.on("ready-to-show", () =>
 	{
-		overlayWindow.webContents.openDevTools({mode: 'detach', activate: true})
 		overlayWindow.focusOnWebView();
 	});
 
