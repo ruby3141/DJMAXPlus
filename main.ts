@@ -74,8 +74,6 @@ app.whenReady().then(() =>
 			}
 		})
 
-	console.log(overlayWindow.getBounds())
-
 	const display = screen.getDisplayNearestPoint(screen.getCursorScreenPoint())
 	overlay.addWindow(
 		overlayWindow.id,
@@ -107,7 +105,6 @@ app.whenReady().then(() =>
 
 	overlayWindow.webContents.on('paint', (event, dirty, image) =>
 	{
-		console.log('paint called', image.getSize())
 		overlay.sendFrameBuffer(overlayWindow.id, image.getBitmap(), image.getSize().width, image.getSize().height)
 	})
 
@@ -134,7 +131,6 @@ app.whenReady().then(() =>
 
 	overlay.setEventCallback((event, ...args) =>
 	{
-		console.log("Start event", event, args)
 		switch (event)
 		{
 			case 'graphics.window':
@@ -178,7 +174,6 @@ app.whenReady().then(() =>
 			default:
 				break
 		}
-		console.log("End event", event, args)
 	})
 
 	for (let window of overlay.getTopWindows())
