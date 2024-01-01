@@ -10,9 +10,10 @@
   "author": "CDnX",
   "license": "GPL-3.0",
   "dependencies": {
-    "electron": "^28.1.0"
+    "electron-overlay": "file:../goverlay/electron-overlay/"
   },
   "devDependencies": {
+    "electron": "^28.1.0",
     "typescript": "^5.3.3"
   }
 }
