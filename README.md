@@ -31,7 +31,7 @@ You can fix it by changing game's resolution option, or simply restart both DJMA
 - electron: ^28.1.0
 - electron-builder: ^24.9.1
 - typescript: ^5.3.3
-- GOverlay: please read [To start development](#to-start-development)
+- GOverlay: please read [Before start development](#Before-start-development)
 
 ## Before start development
 
