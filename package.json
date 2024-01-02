@@ -5,15 +5,25 @@
   "main": "build/main.js",
   "scripts": {
     "build": "tsc",
-    "start": "electron . --enable-logging"
+    "start": "electron . --enable-logging",
+    "pack": "electron-builder --dir",
+    "postpack": "copyfiles -F node_modules/electron-overlay/*.js node_modules/electron-overlay/*.node node_modules/electron-overlay/*.exe node_modules/electron-overlay/*.dll dist/win-unpacked/resources/app/"
   },
   "author": "CDnX",
   "license": "GPL-3.0",
-  "dependencies": {
-    "electron-overlay": "file:../goverlay/electron-overlay/"
-  },
   "devDependencies": {
+    "copyfiles": "^2.4.1",
     "electron": "^28.1.0",
+    "electron-builder": "^24.9.1",
+    "electron-overlay": "file:../goverlay/electron-overlay/",
     "typescript": "^5.3.3"
+  },
+  "build": {
+    "appId": "devris.djmaxplus",
+    "asar": "false",
+    "files": [
+      "build/",
+      "*.html"
+    ]
   }
 }
