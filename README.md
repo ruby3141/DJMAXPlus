@@ -8,11 +8,19 @@ use Sudden+ in DJMAX, and maybe more?
 2. Start DJMAXPlus and switch back to the game.
 3. Lane cover overlay will poke out from top.
 
+### Hotkeys
+
 - F2: Hide Lane Cover (to unhide, do Open Config or Load Config.)
 - Ctrl + F2 : Open Config
 - Z/X/C/V: Load Config 1/2/3/4
 
 Alt+F4 will close both DJMAX and DJMAXPlus.
+
+### Lane Cover Image
+
+You can put `cover.png` or `cover.jpg` on `./resources/app` directory to load image on lane cover.
+
+### etc.
 
 Please note that due to the limitation of GOverlay, restarting DJMAXPlus will make it project overlay in wrong resolution. <br>
 You can fix it by changing game's resolution option, or simply restart both DJMAX and DJMAXPlus.
