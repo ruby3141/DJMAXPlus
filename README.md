@@ -2,6 +2,8 @@
 
 use Sudden+ in DJMAX, and maybe more?
 
+![Preview](https://github.com/ruby3141/readme-assets/blob/main/DJMAXPlus/preview.gif?raw=true)
+
 ## How to use
 
 1. Start DJMAX RESPECT V. Wait until it shows epilepsy warning.
