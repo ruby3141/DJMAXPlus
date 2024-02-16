@@ -1,5 +1,7 @@
 # DJMAXPlus
 
+Lang: **EN** / [KO](README.ko.md)
+
 use Sudden+ in DJMAX, and maybe more?
 
 ![Preview](https://github.com/ruby3141/readme-assets/blob/main/DJMAXPlus/preview.gif?raw=true)
