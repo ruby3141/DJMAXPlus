@@ -4,7 +4,7 @@ Lang: [EN](README.md) / **KO**
 
 디맥에서 서든플 쓰게 해주는 프로그램입니다.
 
-![Preview](https://github.com/ruby3141/readme-assets/blob/main/DJMAXPlus/preview.gif?raw=true)
+![Preview](https://github.com/ruby3141/readme-assets/blob/main/DJMAXPlus/preview.avif)
 
 ## 사용법
 
