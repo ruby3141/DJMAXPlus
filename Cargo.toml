@@ -1,0 +1,16 @@
+[package]
+name = "djmaxplus"
+version = "0.2.0"
+edition = "2021"
+
+[lib]
+name = "dp_payload"
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "djmaxplus"
+path = "src/main.rs"
+
+[dependencies]
+hudhook = "0.6.1"
+imgui = "0.11.0"
