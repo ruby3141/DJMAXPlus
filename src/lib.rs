@@ -1,19 +1,9 @@
-use hudhook::{hooks::dx11::ImguiDx11Hooks, ImguiRenderLoop};
-use imgui::Ui;
+mod mainloop;
+mod common;
+mod configs;
+mod helper;
 
-struct DPOverlay;
-
-impl DPOverlay {
-    fn new() -> Self {
-        Self
-    }
-}
-
-impl ImguiRenderLoop for DPOverlay {
-    fn render(&mut self, ui: &mut Ui) {
-
-    }
-}
+use hudhook::hooks::dx11::ImguiDx11Hooks;
 
 // DLL entry point
-hudhook::hudhook!(ImguiDx11Hooks, DPOverlay::new());
+hudhook::hudhook!(ImguiDx11Hooks, mainloop::DjmaxPlusMainLoop::new());
