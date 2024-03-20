@@ -3,7 +3,9 @@ use crate::helper;
 use std::{borrow::Borrow, collections::VecDeque, path::PathBuf};
 
 use hudhook::{util, ImguiRenderLoop};
-use imgui::Ui;
+use imgui::{
+    sys::{igSetNextWindowPos, ImGuiCond, ImGuiCond_Once, ImVec2}, Ui
+};
 
 pub struct DjmaxPlusMainLoop {
     config: DjmaxPlusConfig,
@@ -65,6 +67,16 @@ impl ImguiRenderLoop for DjmaxPlusMainLoop {
         if !self.is_noti_popup_opened && !self.notifications.is_empty() {
             self.is_noti_popup_opened = true;
             ui.open_popup("notification_popup")
+        }
+        // Inevitable unsafe call to set popup position
+        // 5 years old problem which hasn't been fixed yet
+        // https://github.com/imgui-rs/imgui-rs/issues/201
+        unsafe {
+            igSetNextWindowPos(
+                ImVec2::new(500., 500.),
+                ImGuiCond_Once as ImGuiCond,
+                ImVec2::new(0., 0.),
+            )
         }
         ui.popup("notification_popup", || {
             ui.text(self.notifications.front().unwrap());
