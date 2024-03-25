@@ -55,6 +55,9 @@ impl ImguiRenderLoop for DjmaxPlusMainLoop {
                 _ => (),
             },
         }
+
+        self.notifications
+            .push_back("DJMAXPlus is now operational.".to_string());
     }
 
     fn before_render(&mut self, ctx: &mut imgui::Context) {
