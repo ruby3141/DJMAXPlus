@@ -2,22 +2,22 @@ use super::{
     lanecover_context::LanecoverContext, noti_popup_context::NotiPopupContext,
     runtime_context::RuntimeContext,
 };
-use crate::{configs::DjmaxPlusConfig, helper};
+use crate::{configs::DjmaxplusConfig, helper};
 
 use hudhook::ImguiRenderLoop;
 use imgui::Ui;
 
-pub struct DjmaxPlusContext {
-    config: DjmaxPlusConfig,
+pub struct DjmaxplusContext {
+    config: DjmaxplusConfig,
     runtime: RuntimeContext,
     noti_popup: NotiPopupContext,
     lanecover: LanecoverContext,
 }
 
-impl DjmaxPlusContext {
+impl DjmaxplusContext {
     pub fn new() -> Self {
         Self {
-            config: DjmaxPlusConfig::new(),
+            config: DjmaxplusConfig::new(),
             runtime: RuntimeContext::new(),
             noti_popup: NotiPopupContext::new(),
             lanecover: LanecoverContext::new(),
@@ -25,7 +25,7 @@ impl DjmaxPlusContext {
     }
 
     fn load_config(&mut self) -> Result<(), String> {
-        self.config = DjmaxPlusConfig::load(helper::config_path(
+        self.config = DjmaxplusConfig::load(helper::config_path(
             self.runtime
                 .dll_path()
                 .as_ref()
@@ -36,7 +36,7 @@ impl DjmaxPlusContext {
     }
 }
 
-impl ImguiRenderLoop for DjmaxPlusContext {
+impl ImguiRenderLoop for DjmaxplusContext {
     fn initialize<'a>(
         &'a mut self,
         _ctx: &mut imgui::Context,

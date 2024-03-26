@@ -5,14 +5,14 @@ use crate::{common::LaneDirection, configs::LanecoverConfig};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
-pub struct DjmaxPlusConfig {
+pub struct DjmaxplusConfig {
     pub lane_direction: LaneDirection,
     pub lane_offset: i8,
     pub lanecover_visible: bool,
     pub lanecover_configs: [LanecoverConfig; 4],
 }
 
-impl DjmaxPlusConfig {
+impl DjmaxplusConfig {
     pub fn new() -> Self {
         Self {
             lane_direction: LaneDirection::Center,

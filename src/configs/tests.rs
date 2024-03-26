@@ -1,6 +1,6 @@
 use crate::{
     common::LaneDirection,
-    configs::DjmaxPlusConfig,
+    configs::DjmaxplusConfig,
 };
 use std::borrow::Borrow;
 
@@ -8,13 +8,13 @@ use hudhook::util;
 
 #[test]
 fn generate_and_load() {
-    let config = DjmaxPlusConfig::new();
+    let config = DjmaxplusConfig::new();
     let path = crate::helper::config_path(Borrow::borrow(
         &util::get_dll_path().unwrap(),
     ));
     config.save(path.clone()).unwrap();
 
-    let config = DjmaxPlusConfig::load(path).unwrap();
+    let config = DjmaxplusConfig::load(path).unwrap();
     assert!(matches!(
         config.lane_direction,
         LaneDirection::Center

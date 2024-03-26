@@ -16,7 +16,7 @@ impl LanecoverContext {
         &mut self,
         ui: &mut imgui::Ui,
         runtime: &RuntimeContext,
-        config: &DjmaxPlusConfig,
+        config: &DjmaxplusConfig,
     ) {
         let style_lanecover_windowbordersize = ui.push_style_var(StyleVar::WindowBorderSize(0.));
         let style_lanecover_windowpadding = ui.push_style_var(StyleVar::WindowPadding([0., 0.]));
