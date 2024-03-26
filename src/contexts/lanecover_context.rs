@@ -1,5 +1,5 @@
 use super::runtime_context::RuntimeContext;
-use crate::{common::LaneDirection, configs::*};
+use crate::configs::*;
 
 use imgui::{StyleVar, WindowFlags};
 

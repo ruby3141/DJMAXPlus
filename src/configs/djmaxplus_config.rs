@@ -1,7 +1,7 @@
 use std::fs;
 use std::path::Path;
 
-use crate::{common::LaneDirection, configs::LanecoverConfig};
+use crate::configs::{LaneDirection, LanecoverConfig};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
