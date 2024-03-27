@@ -1,6 +1,6 @@
 use super::{
-    lanecover_context::LanecoverContext, noti_popup_context::NotiPopupContext,
-    runtime_context::RuntimeContext,
+    config_editor_context::ConfigEditorContext, lanecover_context::LanecoverContext,
+    noti_popup_context::NotiPopupContext, runtime_context::RuntimeContext,
 };
 use crate::{configs::DjmaxplusConfig, helper};
 
@@ -12,6 +12,7 @@ pub struct DjmaxplusContext {
     runtime: RuntimeContext,
     noti_popup: NotiPopupContext,
     lanecover: LanecoverContext,
+    config_editor: ConfigEditorContext,
 }
 
 impl DjmaxplusContext {
@@ -21,6 +22,7 @@ impl DjmaxplusContext {
             runtime: RuntimeContext::new(),
             noti_popup: NotiPopupContext::new(),
             lanecover: LanecoverContext::new(),
+            config_editor: ConfigEditorContext::new(),
         }
     }
 
@@ -64,11 +66,16 @@ impl ImguiRenderLoop for DjmaxplusContext {
             ctx.io_mut().mouse_draw_cursor = true;
         }
 
+        // Any context which wants keyboard to be captured should overwrite it on every frame.
+        ctx.io_mut().want_capture_keyboard = false;
+
+        self.config_editor.before_render(ctx);
         self.runtime.before_render(ctx);
     }
 
     fn render(&mut self, ui: &mut Ui) {
         self.noti_popup.render(ui);
         self.lanecover.render(ui, &self.runtime, &self.config);
+        self.config_editor.render(ui, &mut self.config, &mut self.lanecover, &self.runtime);
     }
 }
