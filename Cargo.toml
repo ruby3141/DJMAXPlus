@@ -13,6 +13,7 @@ path = "src/main.rs"
 
 [dependencies]
 hudhook = "0.6.1"
+serde_with = "3.7.0"
 serde_yaml = "0.9.33"
 
 [dependencies.imgui]
