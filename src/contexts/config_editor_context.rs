@@ -35,7 +35,6 @@ impl ConfigEditorContext {
                 ]))
                 .position([0.0, 0.0], Condition::Always)
                 .build(|| {
-                    todo!();
                 });
         }
     }

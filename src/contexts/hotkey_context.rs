@@ -1,4 +1,4 @@
-use imgui::Context;
+use imgui::{Context, Ui};
 
 use crate::configs::DjmaxplusConfig;
 
@@ -9,9 +9,9 @@ pub struct HotkeyContext {
     editor_hotkey_doubletap_state: DoubletapState,
 }
 
-const EDITOR_HOTKEY_DOUBLETAP_WINDOW: f64 = 0.35;
+const EDITOR_HOTKEY_DOUBLETAP_WINDOW: f64 = 3.;
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Debug)]
 enum DoubletapState {
     Wait,
     FirstDown,
@@ -22,7 +22,7 @@ enum DoubletapState {
 impl HotkeyContext {
     pub fn new() -> Self {
         Self {
-            last_editor_hotkey_pressed: f64::MIN,
+            last_editor_hotkey_pressed: 0.,
             editor_hotkey_doubletap_state: DoubletapState::Wait,
         }
     }
@@ -36,15 +36,6 @@ impl HotkeyContext {
     ) {
         let now = ctx.time();
 
-        if ![DoubletapState::Wait, DoubletapState::SecondDown]
-            .contains(&self.editor_hotkey_doubletap_state)
-        {
-            if &self.last_editor_hotkey_pressed + EDITOR_HOTKEY_DOUBLETAP_WINDOW < now {
-                config_editor.visible ^= true; // flip
-                self.editor_hotkey_doubletap_state = DoubletapState::Wait;
-            }
-        }
-
         match self.editor_hotkey_doubletap_state {
             DoubletapState::Wait => {
                 if ctx.io().keys_down[config.hotkey_config.config_editor as usize] {
@@ -57,7 +48,13 @@ impl HotkeyContext {
                     self.editor_hotkey_doubletap_state = DoubletapState::FirstUp;
                 }
             }
-            DoubletapState::FirstUp => {
+            DoubletapState::FirstUp => 'fu: {
+                if &self.last_editor_hotkey_pressed + EDITOR_HOTKEY_DOUBLETAP_WINDOW < now {
+                    config_editor.visible ^= true; // flip
+                    self.editor_hotkey_doubletap_state = DoubletapState::Wait;
+                    break 'fu;
+                }
+
                 if ctx.io().keys_down[config.hotkey_config.config_editor as usize] {
                     config.lanecover_visible ^= true; // flip
                     self.editor_hotkey_doubletap_state = DoubletapState::SecondDown;
@@ -75,5 +72,15 @@ impl HotkeyContext {
                 lanecover.config_index = index;
             }
         }
+    }
+
+    pub fn render(&self, ui: &mut Ui) {
+        ui.window("hotkey_context_debug")
+            .build(||{
+                ui.text(format!("framerate: {}", ui.io().framerate));
+                ui.text(format!("now: {}", ui.time()));
+                ui.text(format!("last input: {}", self.last_editor_hotkey_pressed));
+                ui.text(format!("state: {:?}", self.editor_hotkey_doubletap_state));
+            });
     }
 }

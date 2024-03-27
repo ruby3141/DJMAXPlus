@@ -16,7 +16,7 @@ pub struct HotkeyConfig {
 impl HotkeyConfig {
     pub fn new() -> Self {
         Self {
-            config_editor: Key::F12,
+            config_editor: Key::F2,
             load_config: [Key::Z, Key::X, Key::C, Key::V],
         }
     }

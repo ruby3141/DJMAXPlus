@@ -83,9 +83,13 @@ impl ImguiRenderLoop for DjmaxplusContext {
     }
 
     fn render(&mut self, ui: &mut Ui) {
+
+        ui.show_demo_window(&mut true);
+        ui.show_metrics_window(&mut true);
         self.noti_popup.render(ui);
         self.lanecover.render(ui, &self.runtime, &self.config);
         self.config_editor
             .render(ui, &mut self.config, &mut self.lanecover, &self.runtime);
+        self.hotkey.render(ui);
     }
 }
