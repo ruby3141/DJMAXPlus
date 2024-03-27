@@ -4,7 +4,7 @@ use crate::configs::*;
 use imgui::{StyleVar, WindowFlags};
 
 pub struct LanecoverContext {
-    config_index: usize,
+    pub config_index: usize,
 }
 
 impl LanecoverContext {
