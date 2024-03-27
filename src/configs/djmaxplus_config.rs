@@ -1,7 +1,7 @@
 use std::fs;
 use std::path::Path;
 
-use crate::configs::{LaneDirection, LanecoverConfig};
+use crate::configs::{LaneDirection, LanecoverConfig, HotkeyConfig};
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize)]
@@ -10,6 +10,7 @@ pub struct DjmaxplusConfig {
     pub lane_offset: i8,
     pub lanecover_visible: bool,
     pub lanecover_configs: [LanecoverConfig; 4],
+    pub hotkey_config: HotkeyConfig,
 }
 
 impl DjmaxplusConfig {
@@ -19,6 +20,7 @@ impl DjmaxplusConfig {
             lane_offset: 0,
             lanecover_visible: true,
             lanecover_configs: [LanecoverConfig::new(); 4],
+            hotkey_config: HotkeyConfig::new(),
         }
     }
 
